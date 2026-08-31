@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Omar Hassan Mohamed | Computer & Network Security Engineer</title>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --primary-green: #00ff66;
+            --accent-cyan: #00e5ff;
+            --text-main: #c9d1d9;
+            --text-muted: #8b949e;
+            --font-mono: 'Courier New', Courier, monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-mono);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .sys-status {
+            color: var(--primary-green);
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            color: var(--accent-cyan);
+            font-size: 2rem;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        .terminal-box {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 255, 102, 0.05);
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
+
+        .terminal-title {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-left: auto;
+        }
+
+        .cli-output {
+            max-height: 180px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .cli-input-row {
+            display: flex;
+            align-items: center;
+        }
+
+        .prompt {
+            color: var(--primary-green);
+            margin-right: 8px;
+        }
+
+        input[type="text"] {
+            background: transparent;
+            border: none;
+            color: var(--accent-cyan);
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            width: 100%;
+            outline: none;
+        }
+
+        section {
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            color: var(--primary-green);
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 4px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .card:hover {
+            border-color: var(--primary-green);
+            transform: translateY(-2px);
+        }
+
+        .card h3 {
+            color: var(--accent-cyan);
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .tag {
+            display: inline-block;
+            background: rgba(0, 229, 255, 0.1);
+            color: var(--accent-cyan);
+            font-size: 0.75rem;
+            padding: 2px 6px;
+            border-radius: 3px;
+            margin-right: 5px;
+            margin-top: 8px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 10px;
+        }
+
+        ul li::before {
+            content: "> ";
+            color: var(--primary-green);
+        }
+
+        a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-top: 50px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="sys-status">[SYS_STATUS: ONLINE] | <span id="packet-counter">Packets Analyzed: 0</span></div>
+        <h1 id="typed-header"></h1>
+        <p class="subtitle">Dubai, UAE | Computer Engineering Graduate (AUS)</p>
+    </header>
+
+    <!-- Interactive Terminal Component -->
+    <div class="terminal-box">
+        <div class="terminal-header">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="terminal-title">interactive_cli_v1.0.sh</span>
+        </div>
+        <div class="cli-output" id="cli-output">
+            <div>Type <span style="color:var(--primary-green)">'help'</span> to view available commands.</div>
+        </div>
+        <div class="cli-input-row">
+            <span class="prompt">visitor@omar-portfolio:~$</span>
+            <input type="text" id="cli-input" autofocus autocomplete="off">
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2>01. // ABOUT_ME</h2>
+        <p>Computer Engineer specializing in network architecture, systems security, and hardware-software integration. Driven by a passion for bridging low-level infrastructure with intelligent automation, analyzing network telemetry, and building secure, resilient digital systems to solve complex technical challenges.</p>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <h2>02. // TECHNICAL_SKILLS</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Networking & Security</h3>
+                <ul>
+                    <li>TCP/IP, Subnetting, VLANs</li>
+                    <li>OSPF, BGP, NAT, ACLs</li>
+                    <li>Wireshark, Packet Tracer</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>Hardware & Systems</h3>
+                <ul>
+                    <li>STM32/Nucleo Microcontrollers</li>
+                    <li>Embedded C & Hardware Security</li>
+                    <li>FPGA & Digital Logic Design</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>Development & Tools</h3>
+                <ul>
+                    <li>Python, C/C++, JavaScript</li>
+                    <li>SQL Databases & Shell Scripting</li>
+                    <li>Git/GitHub, MATLAB, Quartus</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <h2>03. // FEATURED_PROJECTS</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Enterprise Network Topology</h3>
+                <p>Multi-subnet enterprise infrastructure featuring VLAN segmentation, OSPF routing, ACL boundary security, and NAT implementation.</p>
+                <span class="tag">Cisco Packet Tracer</span>
+                <span class="tag">Security</span>
+            </div>
+            <div class="card">
+                <h3>Automated BFRB Detection System</h3>
+                <p>Cyber-physical senior project integrating embedded hardware sensors with real-time signal analysis and personalized haptic feedback.</p>
+                <span class="tag">Embedded C</span>
+                <span class="tag">Sensors</span>
+            </div>
+            <div class="card">
+                <h3>ECG-Controlled Bio-Interface Car</h3>
+                <p>Embedded hardware system capturing bio-signals via STM32 to control motor driver actuators dynamically in real-time.</p>
+                <span class="tag">STM32</span>
+                <span class="tag">Signal Processing</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2>04. // CONNECT</h2>
+        <ul>
+            <li>Email: <a href="mailto:omarmohamed999123@gmail.com">omarmohamed999123@gmail.com</a></li>
+            <li>GitHub: <a href="https://github.com/b00091621" target="_blank">github.com/b00091621</a></li>
+            <li>Phone: +971 56 993 5136</li>
+        </ul>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Omar Hassan Mohamed | Hosted on GitHub Pages</p>
+    </footer>
+</div>
+
+<script>
+    // Header Typing Effect
+    const titleText = "Omar Hassan Mohamed";
+    let index = 0;
+    function typeHeader() {
+        if (index < titleText.length) {
+            document.getElementById("typed-header").innerHTML += titleText.charAt(index);
+            index++;
+            setTimeout(typeHeader, 80);
+        }
+    }
+    typeHeader();
+
+    // Simulated Packet Counter
+    let count = 1048;
+    setInterval(() => {
+        count += Math.floor(Math.random() * 5) + 1;
+        document.getElementById("packet-counter").innerText = `Packets Analyzed: ${count}`;
+    }, 1500);
+
+    // Terminal Commands Logic
+    const inputField = document.getElementById("cli-input");
+    const outputContainer = document.getElementById("cli-output");
+
+    inputField.addEventListener("keydown", function(e) {
+        if (e.key === "Enter") {
+            const cmd = this.value.trim().toLowerCase();
+            this.value = "";
+            
+            const line = document.createElement("div");
+            line.innerHTML = `<span style="color:var(--primary-green)">visitor@desouki:~$</span> ${cmd}`;
+            outputContainer.appendChild(line);
+
+            const response = document.createElement("div");
+            response.style.color = "var(--text-muted)";
+            response.style.marginBottom = "8px";
+
+            switch(cmd) {
+                case "help":
+                    response.innerHTML = "Available commands: <b style='color:var(--accent-cyan)'>about, skills, projects, contact, clear</b>";
+                    break;
+                case "about":
+                    response.innerText = "Omar is a Computer Engineer targeting Networks & Cybersecurity technical roles.";
+                    break;
+                case "skills":
+                    response.innerText = "TCP/IP, OSPF, VLANs, Wireshark, Python, Embedded C, STM32, C++, SQL.";
+                    break;
+                case "projects":
+                    response.innerText = "1. Enterprise Network Topology | 2. BFRB Detection System | 3. ECG Bio-Car";
+                    break;
+                case "contact":
+                    response.innerText = "Email: omarmohamed999123@gmail.com | Phone: +971 56 993 5136";
+                    break;
+                case "clear":
+                    outputContainer.innerHTML = "";
+                    return;
+                default:
+                    response.innerHTML = `<span style="color:#ff5f56">Command not recognized: '${cmd}'. Type 'help' for options.</span>`;
+            }
+            outputContainer.appendChild(response);
+            outputContainer.scrollTop = outputContainer.scrollHeight;
+        }
+    });
+</script>
+</body>
+</html>
